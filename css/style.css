@@ -1270,3 +1270,19 @@ footer .credits a {
     bottom: 15px;
   }
 }
+
+.rounded-circle{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+}
+
+.ico-circle{
+  position: relative;
+}
+
+.highlight{
+  font-weight: 700;
+    color: #0487cc;
+}
