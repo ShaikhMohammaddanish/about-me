@@ -37,7 +37,16 @@
      <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" /> 
      <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" /> 
     
-    
+<style>
+.pulse-btn {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+</style>
     
   </head>
 
@@ -130,11 +139,13 @@
                   <div class="row">
                     <div class="col-sm-6 col-md-5">
                       <div class="about-img">
-                        <img
-                          src="img/profile_img.jpg"
-                          class="img-fluid rounded b-shadow-a"
-                          alt=""
-                        />
+                        <button data-toggle="modal" data-target="#videoModal" style="border: none; background: none; padding: 0;">
+                          <img
+                            src="img/profile_img.jpg"
+                            class="img-fluid rounded b-shadow-a"
+                            alt=""
+                          />
+                        </button>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-7">
@@ -252,9 +263,16 @@
                 </div>
                 <div class="col-md-6">
                   <div class="about-me pt-4 pt-md-0">
-                    <div class="title-box-2">
-                      <h5 class="title-left">About me</h5>
+                    <div class="title-box-2 d-flex align-items-center">
+                      <h5 class="title-left mb-0 mr-3">About me</h5>
+                      <button class="btn btn-primary btn-sm pulse-btn" data-toggle="modal" data-target="#videoModal">
+                        <i class="fa fa-play"></i> Play Video
+                      </button>
                     </div>
+                    <video id="scrollVideo" width="100%" muted playsinline controls style="padding: 15px 0px;">
+                      <source src="intro.mp4" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
                     <p class="lead font-weight-normal">
 
                       Hello! I'm MohammadDanish Shaikh, a passionate and results-driven software developer with a 
@@ -905,5 +923,43 @@
     <script>
       AOS.init();
     </script>
+
+<!-- Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="videoModalLabel">Intro Video</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <video width="100%" controls>
+          <source src="intro.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById('scrollVideo');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      video.play().catch(e => {
+        console.log('Autoplay blocked, user interaction required');
+      });
+    } else {
+      video.pause();
+    }
+  });
+}, { threshold: 0.5 });
+
+observer.observe(video);
+</script>
+
   </body>
 </html>
